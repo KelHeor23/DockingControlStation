@@ -17,6 +17,9 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        conn_settings.h
+        conn_settings.cpp
+        conn_settings.ui
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -38,12 +41,11 @@ else()
     else()
         add_executable(DockingControlStation
             ${PROJECT_SOURCES}
-            connection_settings.ui
         )
     endif()
 endif()
 
-target_link_libraries(DockingControlStation PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(DockingControlStation Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -6,20 +6,194 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>1485</width>
+    <height>719</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralwidget"/>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1271</width>
+      <height>671</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetDefaultConstraint</enum>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QPushButton" name="startDocking">
+         <property name="text">
+          <string>Старт</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_2">
+         <property name="text">
+          <string>Отмена</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_3">
+         <property name="text">
+          <string>Стоп</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QGroupBox" name="groupBox">
+           <property name="title">
+            <string>Дрон 1</string>
+           </property>
+           <widget class="QWidget" name="verticalLayoutWidget_3">
+            <property name="geometry">
+             <rect>
+              <x>-1</x>
+              <y>29</y>
+              <width>311</width>
+              <height>131</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_3">
+             <item>
+              <widget class="QPushButton" name="drone1MoveCargoForvard">
+               <property name="text">
+                <string>Сдвинуть телегу вперед</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="drone1MoveCargoBack">
+               <property name="text">
+                <string>Сдвинуть телегу назад</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="drone1MoveCargoHome">
+               <property name="text">
+                <string>Завезти телегу к домашней точке</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="groupBox_2">
+           <property name="title">
+            <string>Дрон 2</string>
+           </property>
+           <widget class="QWidget" name="verticalLayoutWidget_4">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>30</y>
+              <width>311</width>
+              <height>131</height>
+             </rect>
+            </property>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QPushButton" name="drone2MoveCargoForvard">
+               <property name="text">
+                <string>Сдвинуть телегу вперед</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="drone2MoveCargoBack">
+               <property name="text">
+                <string>Сдвинуть телегу назад</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="drone2MoveCargoHome">
+               <property name="text">
+                <string>Завезти телегу к домашней точке</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="sizeConstraint">
+        <enum>QLayout::SetDefaultConstraint</enum>
+       </property>
+       <item>
+        <widget class="QLabel" name="dron2ReadinessStatus">
+         <property name="text">
+          <string>Дрон 1. Готовность</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="dron1ReadinessStatus">
+         <property name="text">
+          <string>Дрон 2. Готовность</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="rodExtention">
+         <property name="text">
+          <string>Стрела выдвинута</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="HooksLock">
+         <property name="text">
+          <string>Крюки закрылись</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="pullingUp">
+         <property name="text">
+          <string>Дроны стянулись</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="transferDone">
+         <property name="text">
+          <string>Передача завершена</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>1485</width>
      <height>23</height>
     </rect>
    </property>
@@ -27,17 +201,41 @@
     <property name="title">
      <string>Файл</string>
     </property>
-    <addaction name="action"/>
+    <addaction name="openConnectionSettings"/>
+    <addaction name="separator"/>
+    <addaction name="close"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="action">
+  <action name="openConnectionSettings">
    <property name="text">
     <string>Подлключение</string>
    </property>
   </action>
+  <action name="close">
+   <property name="text">
+    <string>Закрыть</string>
+   </property>
+  </action>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>close</sender>
+   <signal>triggered()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>299</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

@@ -2,8 +2,11 @@
 #define MAINWINDOW_H
 
 #include "conn_settings.h"
+
 #include <QMainWindow>
 #include <QLabel>
+
+#include "Exchange/DroneExchangeClient.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,6 +22,7 @@ public:
 
 public slots:
     void openConnectionSettings();
+    void sendStartMsg();
 
 private:
     Ui::MainWindow *ui;
@@ -26,5 +30,8 @@ private:
 
     QLabel *drone1_ConnectionStatus;
     QLabel *drone2_ConnectionStatus;
+
+    DroneExchangeClient *drone1Client;
+    DroneExchangeClient *drone2Client;
 };
 #endif // MAINWINDOW_H

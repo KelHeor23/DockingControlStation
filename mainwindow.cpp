@@ -18,7 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->addPermanentWidget(drone1_ConnectionStatus);
     ui->statusbar->addPermanentWidget(drone2_ConnectionStatus);
 
-    connect(ui->openConnectionSettings, &QAction::toggled,      this, &MainWindow::openConnectionSettings);
+    connect(ui->openConnectionSettings, &QAction::triggered,    this, &MainWindow::openConnectionSettings);
     connect(ui->startDockingBtn,        &QPushButton::clicked,  this, &MainWindow::sendDockingMsg);
     connect(ui->undockingBtn,           &QPushButton::clicked,  this, &MainWindow::sendUnDockingMsg);
     connect(ui->stopBtn,                &QPushButton::clicked,  this, &MainWindow::sendStopMsg);

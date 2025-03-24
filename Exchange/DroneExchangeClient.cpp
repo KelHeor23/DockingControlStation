@@ -19,14 +19,11 @@ void DroneExchangeClient::connectToServer(const QString &host, quint16 port) {
     reconnectTimer->start(5000); // 5 секунд между попытками
 }
 
-void DroneExchangeClient::sendMessage(const QString &message) {
-    /*QByteArray block;
-    QDataStream out(&block, QIODevice::WriteOnly);
-    out << quint16(0) << message;
-    out.device()->seek(0);
-    out << quint16(block.size() - sizeof(quint16));
-    out << message;*/
-    socket->write(message.toUtf8());
+void DroneExchangeClient::sendMessage(Commands message) {
+    QByteArray block;
+    block.append(static_cast<char>(message));
+    block.append(static_cast<char>('\n'));
+    socket->write(block);
 }
 
 void DroneExchangeClient::handleRead() {

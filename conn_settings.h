@@ -19,6 +19,7 @@ public:
 private:
     bool isValidIPAddress(const QString &ip);
     bool isValidIPPort(const QString &port);
+    void setDefaultBorders();
 
 private slots:
     void setConnValue();

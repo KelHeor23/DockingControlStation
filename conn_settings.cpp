@@ -15,6 +15,7 @@ conn_settings::conn_settings(QWidget *parent)
     loadSettings();
 
     connect(ui->setConnValuesBtn, &QPushButton::clicked, this, &conn_settings::setConnValue);
+    connect(ui->cancel, &QPushButton::clicked, this, &conn_settings::loadSettings);
 }
 
 conn_settings::~conn_settings()
@@ -31,8 +32,17 @@ bool conn_settings::isValidIPAddress(const QString &ip)
 
 bool conn_settings::isValidIPPort(const QString &port)
 {
-    int port_t = port.toInt();
-    return (port_t >= 0 && port_t <= 65535);
+    bool succes = true;
+    int port_t = port.toInt(&succes);
+    return succes && (port_t >= 0 && port_t <= 65535);
+}
+
+void conn_settings::setDefaultBorders()
+{
+    ui->Drone1IpAdressTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
+    ui->Drone1PortTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
+    ui->Drone2IpAdressTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
+    ui->Drone2PortTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
 }
 
 void conn_settings::setConnValue()
@@ -65,11 +75,7 @@ void conn_settings::setConnValue()
         drone2IP    = ui->Drone2IpAdressTxtEdt->toPlainText();
         drone2Port  = ui->Drone2PortTxtEdt->toPlainText().toInt();
 
-        ui->Drone1IpAdressTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
-        ui->Drone1PortTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
-        ui->Drone2IpAdressTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
-        ui->Drone2PortTxtEdt->setStyleSheet("QTextEdit { border: 0px solid black }");
-
+        setDefaultBorders();
         saveSettings();
     }
 }
@@ -85,6 +91,8 @@ void conn_settings::loadSettings()
     ui->Drone2IpAdressTxtEdt->setText(drone2IP);
     ui->Drone1PortTxtEdt->setText(QString::number(drone1Port));
     ui->Drone2PortTxtEdt->setText(QString::number(drone2Port));
+
+    setDefaultBorders();
 }
 
 void conn_settings::saveSettings()

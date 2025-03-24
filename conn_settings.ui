@@ -180,6 +180,19 @@
     <string>Сохранить</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="cancel">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>270</y>
+     <width>88</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Отмена</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

@@ -28,24 +28,18 @@ void DroneExchangeClient::sendMessage(Commands message) {
 
 void DroneExchangeClient::handleRead() {
     QTcpSocket* socket = qobject_cast<QTcpSocket*>(sender());
-    QDataStream in(socket);
-    in.setVersion(QDataStream::Qt_5_0);
+    QByteArray buffer = socket->readAll();
+    QString data = QString::fromUtf8(buffer);
 
-    if (nextBlockSize == 0) {
-        if (socket->bytesAvailable() < sizeof(quint16)) {
-            return;
-        }
-        in >> nextBlockSize;
+    // Поиск маркера (например, "\n")
+    int markerPos = data.indexOf('\n');
+
+    if (markerPos != -1) {
+        QString completeMessage = data.left(markerPos);
+        // Обработка сообщения
+        emit messageReceived(completeMessage);
+        qDebug() << completeMessage;
     }
-
-    if (socket->bytesAvailable() < nextBlockSize) {
-        return;
-    }
-
-    QString message;
-    in >> message;
-    emit messageReceived(message);
-    nextBlockSize = 0;
 }
 
 void DroneExchangeClient::handleError(QAbstractSocket::SocketError) {

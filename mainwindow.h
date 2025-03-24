@@ -22,11 +22,14 @@ public:
 
 public slots:
     void openConnectionSettings(bool);
+    void handlePapaIsD1(bool checked);
+    void handlePapaIsD2(bool checked);
+    void reconnect();
+
+    /// Слоты отправки сообщений
     void sendDockingMsg();
     void sendUnDockingMsg();
     void sendStopMsg();
-    void handlePapaIsD1(bool checked);
-    void handlePapaIsD2(bool checked);
     void sendDrone1MoveCargoCV();
     void sendDrone1MoveCargoCCV();
     void sendDrone1MoveCargoHome();
@@ -34,9 +37,10 @@ public slots:
     void sendDrone2MoveCargoCCV();
     void sendDrone2MoveCargoHome();
 
+
 private:
     Ui::MainWindow *ui;
-    conn_settings *conn_set;
+    conn_settings *conn_settings_m;
 
     QLabel *drone1_ConnectionStatus;
     QLabel *drone2_ConnectionStatus;

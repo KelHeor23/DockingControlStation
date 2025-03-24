@@ -16,6 +16,14 @@ public:
     explicit conn_settings(QWidget *parent = nullptr);
     ~conn_settings();
 
+    QString getDrone1IP() const;
+
+    quint16 getDrone1Port() const;
+
+    QString getDrone2IP() const;
+
+    quint16 getDrone2Port() const;
+
 private:
     bool isValidIPAddress(const QString &ip);
     bool isValidIPPort(const QString &port);
@@ -25,6 +33,9 @@ private slots:
     void setConnValue();
     void loadSettings();
     void saveSettings();
+
+signals:
+    void newConnSettings();
 
 private:
     Ui::conn_settings *ui;

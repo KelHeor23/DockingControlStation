@@ -77,6 +77,8 @@ void conn_settings::setConnValue()
 
         setDefaultBorders();
         saveSettings();
+
+        emit newConnSettings();
     }
 }
 
@@ -101,4 +103,24 @@ void conn_settings::saveSettings()
     conSettings->setValue("drone1Port", drone1Port);
     conSettings->setValue("drone2IP", drone2IP);
     conSettings->setValue("drone2Port", drone2Port);
+}
+
+quint16 conn_settings::getDrone2Port() const
+{
+    return drone2Port;
+}
+
+QString conn_settings::getDrone2IP() const
+{
+    return drone2IP;
+}
+
+quint16 conn_settings::getDrone1Port() const
+{
+    return drone1Port;
+}
+
+QString conn_settings::getDrone1IP() const
+{
+    return drone1IP;
 }

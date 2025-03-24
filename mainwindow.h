@@ -25,6 +25,8 @@ public slots:
     void handlePapaIsD1(bool checked);
     void handlePapaIsD2(bool checked);
     void reconnect();
+    void drone1Connected(bool succes);
+    void drone2Connected(bool succes);
 
     /// Слоты отправки сообщений
     void sendDockingMsg();

@@ -203,6 +203,7 @@
     </property>
     <addaction name="openConnectionSettings"/>
     <addaction name="separator"/>
+    <addaction name="reconnect"/>
     <addaction name="close"/>
    </widget>
    <widget class="QMenu" name="menu_2">
@@ -218,7 +219,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="openConnectionSettings">
    <property name="text">
-    <string>Подлключение</string>
+    <string>Настройки подключения</string>
    </property>
   </action>
   <action name="close">
@@ -240,6 +241,11 @@
    </property>
    <property name="text">
     <string>Папа - дрон 2</string>
+   </property>
+  </action>
+  <action name="reconnect">
+   <property name="text">
+    <string>Переподключиться</string>
    </property>
   </action>
  </widget>

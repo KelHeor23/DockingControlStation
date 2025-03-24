@@ -32,6 +32,7 @@ public:
 
 signals:
     void messageReceived(const QString& message);
+    void connected(bool);
 
 private slots:
     void handleRead();

@@ -5,15 +5,12 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , conn_settings_m(new class conn_settings)
-    , drone1_ConnectionStatus(new QLabel("drone 1"))
-    , drone2_ConnectionStatus(new QLabel("drone 2"))
+    , drone1_ConnectionStatus(new QLabel("Drone1 IP:"))
+    , drone2_ConnectionStatus(new QLabel("Drone2 IP:"))
     , drone1Client(new DroneExchangeClient(this))
     , drone2Client(new DroneExchangeClient(this))
 {
     ui->setupUi(this);
-
-    drone1_ConnectionStatus->setStyleSheet("color: red;");
-    drone2_ConnectionStatus->setStyleSheet("color: green;");
 
     ui->statusbar->addPermanentWidget(drone1_ConnectionStatus);
     ui->statusbar->addPermanentWidget(drone2_ConnectionStatus);
@@ -30,7 +27,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->drone2MoveCargoHome,    &QPushButton::clicked,              this, &MainWindow::sendDrone2MoveCargoHome);
     connect(ui->papaIsD1,               &QAction::toggled,                  this, &MainWindow::handlePapaIsD1);
     connect(ui->papaIsD2,               &QAction::toggled,                  this, &MainWindow::handlePapaIsD2);
+    connect(ui->reconnect,              &QAction::toggled,                  this, &MainWindow::reconnect);
     connect(conn_settings_m,            &conn_settings::newConnSettings,    this, &MainWindow::reconnect);
+    connect(drone1Client,               &DroneExchangeClient::connected,    this, &MainWindow::drone1Connected);
+    connect(drone2Client,               &DroneExchangeClient::connected,    this, &MainWindow::drone2Connected);
 
     reconnect();
 }
@@ -67,6 +67,27 @@ void MainWindow::reconnect()
 {
     drone1Client->connectToServer(conn_settings_m->getDrone1IP(), conn_settings_m->getDrone1Port());
     drone2Client->connectToServer(conn_settings_m->getDrone2IP(), conn_settings_m->getDrone2Port());
+
+    drone1_ConnectionStatus->setText("Drone1 IP:" + conn_settings_m->getDrone1IP() + ":" + QString::number(conn_settings_m->getDrone1Port()));
+    drone2_ConnectionStatus->setText("Drone2 IP:" + conn_settings_m->getDrone2IP() + ":" + QString::number(conn_settings_m->getDrone2Port()));
+}
+
+void MainWindow::drone1Connected(bool succes)
+{
+    if (succes) {
+        drone1_ConnectionStatus->setStyleSheet("color: green;");
+    } else {
+        drone1_ConnectionStatus->setStyleSheet("color: red;");
+    }
+}
+
+void MainWindow::drone2Connected(bool succes)
+{
+    if (succes) {
+        drone2_ConnectionStatus->setStyleSheet("color: green;");
+    } else {
+        drone2_ConnectionStatus->setStyleSheet("color: red;");
+    }
 }
 
 void MainWindow::sendDockingMsg()

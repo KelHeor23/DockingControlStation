@@ -50,14 +50,17 @@ void DroneExchangeClient::handleRead() {
 
 void DroneExchangeClient::handleError(QAbstractSocket::SocketError) {
     reconnectTimer->start();
+    emit connected(false);
 }
 
 void DroneExchangeClient::handleConnected() {
     reconnectTimer->stop();
+    emit connected(true);
 }
 
 void DroneExchangeClient::handleDisconnected() {
     reconnectTimer->start();
+    emit connected(false);
 }
 
 void DroneExchangeClient::reconnect() {

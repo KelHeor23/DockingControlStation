@@ -21,8 +21,18 @@ public:
     ~MainWindow();
 
 public slots:
-    void openConnectionSettings();
-    void sendStartMsg();
+    void openConnectionSettings(bool);
+    void sendDockingMsg();
+    void sendUnDockingMsg();
+    void sendStopMsg();
+    void handlePapaIsD1(bool checked);
+    void handlePapaIsD2(bool checked);
+    void sendDrone1MoveCargoCV();
+    void sendDrone1MoveCargoCCV();
+    void sendDrone1MoveCargoHome();
+    void sendDrone2MoveCargoCV();
+    void sendDrone2MoveCargoCCV();
+    void sendDrone2MoveCargoHome();
 
 private:
     Ui::MainWindow *ui;

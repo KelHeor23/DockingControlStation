@@ -142,16 +142,16 @@
         <enum>QLayout::SetDefaultConstraint</enum>
        </property>
        <item>
-        <widget class="QLabel" name="dron2ReadinessStatus">
+        <widget class="QLabel" name="dronMamaReadinessStatus">
          <property name="text">
-          <string>Дрон 1. Готовность</string>
+          <string>Дрон  Мама. Готовность</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="dron1ReadinessStatus">
+        <widget class="QLabel" name="dronPapaReadinessStatus">
          <property name="text">
-          <string>Дрон 2. Готовность</string>
+          <string>Дрон Папа. Готовность</string>
          </property>
         </widget>
        </item>
@@ -163,7 +163,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="HooksLock">
+        <widget class="QLabel" name="hooksLock">
          <property name="text">
           <string>Крюки закрылись</string>
          </property>

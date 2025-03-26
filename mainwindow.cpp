@@ -33,11 +33,31 @@ MainWindow::MainWindow(QWidget *parent)
     connect(drone2Client,               &DroneExchangeClient::connected,    this, &MainWindow::drone2Connected);
 
     reconnect();
+    resetAllStatusLbl();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setupDroneMsgReciveConn()
+{
+    if (dronePapa)
+        connect(dronePapa, &DroneExchangeClient::messageReceived,    this, &MainWindow::recieveStatusPapa);
+
+    if (droneMama)
+        connect(droneMama, &DroneExchangeClient::messageReceived,    this, &MainWindow::recieveStatusMama);
+}
+
+void MainWindow::resetAllStatusLbl()
+{
+    ui->dronPapaReadinessStatus->setStyleSheet(red);
+    ui->dronMamaReadinessStatus->setStyleSheet(red);
+    ui->rodExtention->setStyleSheet(red);
+    ui->hooksLock->setStyleSheet(red);
+    ui->pullingUp->setStyleSheet(red);
+    ui->transferDone->setStyleSheet(red);
 }
 
 void MainWindow::openConnectionSettings(bool)
@@ -50,7 +70,11 @@ void MainWindow::handlePapaIsD1(bool checked)
     if (checked) {
         ui->papaIsD2->setChecked(false);
         drone1Client->sendMessage(DroneExchangeClient::StartPapa);
+        dronePapa = drone1Client;
         drone2Client->sendMessage(DroneExchangeClient::StartMama);
+        droneMama = drone2Client;
+        setupDroneMsgReciveConn();
+        resetAllStatusLbl();
     }
 }
 
@@ -59,7 +83,11 @@ void MainWindow::handlePapaIsD2(bool checked)
     if (checked) {
         ui->papaIsD1->setChecked(false);
         drone1Client->sendMessage(DroneExchangeClient::StartMama);
+        droneMama = drone1Client;
         drone2Client->sendMessage(DroneExchangeClient::StartPapa);
+        dronePapa = drone2Client;
+        setupDroneMsgReciveConn();
+        resetAllStatusLbl();
     }
 }
 
@@ -88,6 +116,48 @@ void MainWindow::drone2Connected(bool succes)
     } else {
         drone2_ConnectionStatus->setStyleSheet("color: red;");
     }
+}
+
+void MainWindow::recieveStatusPapa(QString status)
+{
+    if (status.size() != 3)
+        return;
+
+    if (status[0] == '0')
+        ui->dronPapaReadinessStatus->setStyleSheet(red);
+    else
+        ui->dronPapaReadinessStatus->setStyleSheet(green);
+
+    if (status[1] == '0')
+        ui->rodExtention->setStyleSheet(red);
+    else
+        ui->rodExtention->setStyleSheet(green);
+
+    if (status[2] == '0')
+        ui->pullingUp->setStyleSheet(red);
+    else
+        ui->pullingUp->setStyleSheet(green);
+}
+
+void MainWindow::recieveStatusMama(QString status)
+{
+    if (status.size() != 3)
+        return;
+
+    if (status[0] == '0')
+        ui->dronMamaReadinessStatus->setStyleSheet(red);
+    else
+        ui->dronMamaReadinessStatus->setStyleSheet(green);
+
+    if (status[1] == '0')
+        ui->hooksLock->setStyleSheet(red);
+    else
+        ui->hooksLock->setStyleSheet(green);
+
+    if (status[2] == '0')
+        ui->transferDone->setStyleSheet(red);
+    else
+        ui->transferDone->setStyleSheet(green);
 }
 
 void MainWindow::sendDockingMsg()

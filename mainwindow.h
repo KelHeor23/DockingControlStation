@@ -20,6 +20,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private:
+    void setupDroneMsgReciveConn();
+    void resetAllStatusLbl();
+
 public slots:
     void openConnectionSettings(bool);
     void handlePapaIsD1(bool checked);
@@ -27,6 +31,8 @@ public slots:
     void reconnect();
     void drone1Connected(bool succes);
     void drone2Connected(bool succes);
+    void recieveStatusPapa(QString status);
+    void recieveStatusMama(QString status);
 
     /// Слоты отправки сообщений
     void sendDockingMsg();
@@ -49,5 +55,11 @@ private:
 
     DroneExchangeClient *drone1Client;
     DroneExchangeClient *drone2Client;
+
+    DroneExchangeClient *droneMama;
+    DroneExchangeClient *dronePapa;
+
+    QString red = "background-color: rgba(255, 0, 0, 75);";
+    QString green = "background-color: rgba(0, 255, 0, 75);";
 };
 #endif // MAINWINDOW_H

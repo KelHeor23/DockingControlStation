@@ -37,8 +37,7 @@ void DroneExchangeClient::handleRead() {
     if (markerPos != -1) {
         QString completeMessage = data.left(markerPos);
         // Обработка сообщения
-        emit messageReceived(completeMessage);
-        qDebug() << completeMessage;
+        emit messageReceived(completeMessage);        
     }
 }
 

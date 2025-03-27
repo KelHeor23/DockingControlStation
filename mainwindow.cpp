@@ -137,6 +137,8 @@ void MainWindow::recieveStatusPapa(QString status)
         ui->pullingUp->setStyleSheet(red);
     else
         ui->pullingUp->setStyleSheet(green);
+
+    qDebug() << "Papa: " << status;
 }
 
 void MainWindow::recieveStatusMama(QString status)
@@ -158,6 +160,8 @@ void MainWindow::recieveStatusMama(QString status)
         ui->transferDone->setStyleSheet(red);
     else
         ui->transferDone->setStyleSheet(green);
+
+    qDebug() << "Mama: " << status;
 }
 
 void MainWindow::sendDockingMsg()

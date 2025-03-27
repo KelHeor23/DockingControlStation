@@ -25,8 +25,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->drone2MoveCargoCCV,     &QPushButton::clicked,              this, &MainWindow::sendDrone2MoveCargoCCV);
     connect(ui->drone1MoveCargoHome,    &QPushButton::clicked,              this, &MainWindow::sendDrone1MoveCargoHome);
     connect(ui->drone2MoveCargoHome,    &QPushButton::clicked,              this, &MainWindow::sendDrone2MoveCargoHome);
-    connect(ui->papaIsD1,               &QAction::toggled,                  this, &MainWindow::handlePapaIsD1);
-    connect(ui->papaIsD2,               &QAction::toggled,                  this, &MainWindow::handlePapaIsD2);
+    connect(ui->papaIsD1,               &QAction::triggered,                this, &MainWindow::handlePapaIsD1);
+    connect(ui->papaIsD2,               &QAction::triggered,                this, &MainWindow::handlePapaIsD2);
     connect(ui->reconnect,              &QAction::toggled,                  this, &MainWindow::reconnect);
     connect(conn_settings_m,            &conn_settings::newConnSettings,    this, &MainWindow::reconnect);
     connect(drone1Client,               &DroneExchangeClient::connected,    this, &MainWindow::drone1Connected);
@@ -65,6 +65,50 @@ void MainWindow::openConnectionSettings(bool)
     conn_settings_m->show();
 }
 
+
+void MainWindow::switchDroneRoles(bool makeDrone1Papa)
+{
+    // 1. Сначала сбрасываем текущие роли
+    if (dronePapa) {
+        dronePapa = nullptr;
+    }
+    if (droneMama) {
+        droneMama = nullptr;
+    }
+
+    // 2. Устанавливаем новые роли
+    if (makeDrone1Papa) {
+        drone1Client->sendMessage(DroneExchangeClient::StartPapa);
+        drone2Client->sendMessage(DroneExchangeClient::StartMama);
+        dronePapa = drone1Client;
+        droneMama = drone2Client;
+        ui->papaIsD1->setChecked(true);
+        ui->papaIsD2->setChecked(false);
+    } else {
+        drone1Client->sendMessage(DroneExchangeClient::StartMama);
+        drone2Client->sendMessage(DroneExchangeClient::StartPapa);
+        dronePapa = drone2Client;
+        droneMama = drone1Client;
+        ui->papaIsD1->setChecked(false);
+        ui->papaIsD2->setChecked(true);
+    }
+
+    // 3. Обновляем соединения для обработки сообщений
+    setupDroneMsgReciveConn();
+    resetAllStatusLbl();
+}
+
+void MainWindow::handlePapaIsD1(bool checked)
+{
+    switchDroneRoles(true);
+}
+
+void MainWindow::handlePapaIsD2(bool checked)
+{
+    switchDroneRoles(false);
+}
+
+/*
 void MainWindow::handlePapaIsD1(bool checked)
 {
     if (checked) {
@@ -90,7 +134,7 @@ void MainWindow::handlePapaIsD2(bool checked)
         resetAllStatusLbl();
     }
 }
-
+*/
 void MainWindow::reconnect()
 {
     drone1Client->connectToServer(conn_settings_m->getDrone1IP(), conn_settings_m->getDrone1Port());
@@ -125,17 +169,17 @@ void MainWindow::recieveStatusPapa(QString status)
 
     if (status[0] == '0')
         ui->dronPapaReadinessStatus->setStyleSheet(red);
-    else
+    else if (status[0] == '1')
         ui->dronPapaReadinessStatus->setStyleSheet(green);
 
     if (status[1] == '0')
         ui->rodExtention->setStyleSheet(red);
-    else
+    else if (status[0] == '1')
         ui->rodExtention->setStyleSheet(green);
 
     if (status[2] == '0')
         ui->pullingUp->setStyleSheet(red);
-    else
+    else if (status[0] == '1')
         ui->pullingUp->setStyleSheet(green);
 
     qDebug() << "Papa: " << status;
@@ -148,17 +192,17 @@ void MainWindow::recieveStatusMama(QString status)
 
     if (status[0] == '0')
         ui->dronMamaReadinessStatus->setStyleSheet(red);
-    else
+    else if (status[0] == '1')
         ui->dronMamaReadinessStatus->setStyleSheet(green);
 
     if (status[1] == '0')
         ui->hooksLock->setStyleSheet(red);
-    else
+    else if (status[0] == '1')
         ui->hooksLock->setStyleSheet(green);
 
     if (status[2] == '0')
         ui->transferDone->setStyleSheet(red);
-    else
+    else if (status[0] == '1')
         ui->transferDone->setStyleSheet(green);
 
     qDebug() << "Mama: " << status;

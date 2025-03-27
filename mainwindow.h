@@ -23,6 +23,7 @@ public:
 private:
     void setupDroneMsgReciveConn();
     void resetAllStatusLbl();
+    void switchDroneRoles(bool makeDrone1Papa);
 
 public slots:
     void openConnectionSettings(bool);

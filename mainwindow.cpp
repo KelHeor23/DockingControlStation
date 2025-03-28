@@ -200,9 +200,7 @@ void MainWindow::recieveStatusMama(QString status)
     else if (status[0] == '1')
         ui->hooksLock->setStyleSheet(green);
 
-    if (status[2] == '0')
-        ui->transferDone->setStyleSheet(red);
-    else if (status[0] == '1')
+    if (status[2] == '1')
         ui->transferDone->setStyleSheet(green);
 
     qDebug() << "Mama: " << status;
@@ -218,6 +216,8 @@ void MainWindow::sendUnDockingMsg()
 {
     drone1Client->sendMessage(DroneExchangeClient::Undocking);
     drone2Client->sendMessage(DroneExchangeClient::Undocking);
+
+    ui->transferDone->setStyleSheet(red);
 }
 
 void MainWindow::sendStopMsg()

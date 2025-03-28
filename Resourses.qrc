@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/icins">
+        <file>Resurses/this-is-fine.jpg</file>
+        <file>Resurses/this-is-fine.ico</file>
+        <file>Resurses/this-is-fine.png</file>
+    </qresource>
+</RCC>

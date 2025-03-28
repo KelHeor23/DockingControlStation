@@ -6,194 +6,353 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1485</width>
-    <height>719</height>
+    <width>1278</width>
+    <height>722</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Интерфейс управления стыковкой</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="verticalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>1271</width>
-      <height>671</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetDefaultConstraint</enum>
-     </property>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QPushButton" name="startDockingBtn">
-         <property name="text">
-          <string>Старт</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="undockingBtn">
-         <property name="text">
-          <string>Отмена</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="stopBtn">
-         <property name="text">
-          <string>Стоп</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QVBoxLayout" name="verticalLayout_2">
-         <item>
-          <widget class="QGroupBox" name="groupBox">
-           <property name="title">
-            <string>Дрон 1</string>
-           </property>
-           <widget class="QWidget" name="verticalLayoutWidget_3">
-            <property name="geometry">
-             <rect>
-              <x>-1</x>
-              <y>29</y>
-              <width>311</width>
-              <height>131</height>
-             </rect>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="autoFillBackground">
+    <bool>true</bool>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_5">
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout">
+        <item>
+         <widget class="QPushButton" name="startDockingBtn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Старт</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="undockingBtn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Отмена</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="stopBtn">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Стоп</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <widget class="QGroupBox" name="groupBox">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-             <item>
-              <widget class="QPushButton" name="drone1MoveCargoCV">
-               <property name="text">
-                <string>Сдвинуть телегу вперед</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="drone1MoveCargoCCV">
-               <property name="text">
-                <string>Сдвинуть телегу назад</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="drone1MoveCargoHome">
-               <property name="text">
-                <string>Завезти телегу к домашней точке</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </widget>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_2">
-           <property name="title">
-            <string>Дрон 2</string>
-           </property>
-           <widget class="QWidget" name="verticalLayoutWidget_4">
-            <property name="geometry">
-             <rect>
-              <x>0</x>
-              <y>30</y>
-              <width>311</width>
-              <height>131</height>
-             </rect>
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_4">
-             <item>
-              <widget class="QPushButton" name="drone2MoveCargoCV">
-               <property name="text">
-                <string>Сдвинуть телегу вперед</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="drone2MoveCargoCCV">
-               <property name="text">
-                <string>Сдвинуть телегу назад</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="drone2MoveCargoHome">
-               <property name="text">
-                <string>Завезти телегу к домашней точке</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <property name="title">
+             <string>Дрон 1</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <property name="checkable">
+             <bool>false</bool>
+            </property>
+            <widget class="QWidget" name="verticalLayoutWidget_3">
+             <property name="geometry">
+              <rect>
+               <x>-1</x>
+               <y>29</y>
+               <width>311</width>
+               <height>131</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_3">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="drone1MoveCargoCV">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Сдвинуть телегу вперед</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="drone1MoveCargoCCV">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>300</width>
+                  <height>0</height>
+                 </size>
+                </property>
+                <property name="text">
+                 <string>Сдвинуть телегу назад</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="drone1MoveCargoHome">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Завезти телегу к домашней точке</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="sizeConstraint">
-        <enum>QLayout::SetDefaultConstraint</enum>
-       </property>
-       <item>
-        <widget class="QLabel" name="dronMamaReadinessStatus">
-         <property name="text">
-          <string>Дрон  Мама. Готовность</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="dronPapaReadinessStatus">
-         <property name="text">
-          <string>Дрон Папа. Готовность</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="rodExtention">
-         <property name="text">
-          <string>Стрела выдвинута</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="hooksLock">
-         <property name="text">
-          <string>Крюки закрылись</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="pullingUp">
-         <property name="text">
-          <string>Дроны стянулись</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="transferDone">
-         <property name="text">
-          <string>Передача завершена</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </widget>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="groupBox_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="title">
+             <string>Дрон 2</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+            <widget class="QWidget" name="verticalLayoutWidget_4">
+             <property name="geometry">
+              <rect>
+               <x>0</x>
+               <y>30</y>
+               <width>311</width>
+               <height>131</height>
+              </rect>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_4">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QPushButton" name="drone2MoveCargoCV">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Сдвинуть телегу вперед</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="drone2MoveCargoCCV">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Сдвинуть телегу назад</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="drone2MoveCargoHome">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="text">
+                 <string>Завезти телегу к домашней точке</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </widget>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="sizeConstraint">
+         <enum>QLayout::SetDefaultConstraint</enum>
+        </property>
+        <item>
+         <widget class="QLabel" name="dronMamaReadinessStatus">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="text">
+           <string>Дрон  Мама. Готовность</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="dronPapaReadinessStatus">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Дрон Папа. Готовность</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="rodExtention">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Стрела выдвинута</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="hooksLock">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Крюки закрылись</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="pullingUp">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Дроны стянулись</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="transferDone">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Передача завершена</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1485</width>
+     <width>1278</width>
      <height>23</height>
     </rect>
    </property>
@@ -229,7 +388,10 @@
   </action>
   <action name="papaIsD1">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
+   </property>
+   <property name="enabled">
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Папа - дрон 1</string>
@@ -237,7 +399,7 @@
   </action>
   <action name="papaIsD2">
    <property name="checkable">
-    <bool>true</bool>
+    <bool>false</bool>
    </property>
    <property name="text">
     <string>Папа - дрон 2</string>

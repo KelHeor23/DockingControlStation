@@ -42,6 +42,7 @@ else()
         add_executable(DockingControlStation
             ${PROJECT_SOURCES}
             Exchange/DroneExchangeClient.h Exchange/DroneExchangeClient.cpp
+            Resourses.qrc
         )
     endif()
 endif()

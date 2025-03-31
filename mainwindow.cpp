@@ -15,22 +15,24 @@ MainWindow::MainWindow(QWidget *parent)
     ui->statusbar->addPermanentWidget(drone1_ConnectionStatus);
     ui->statusbar->addPermanentWidget(drone2_ConnectionStatus);
 
-    connect(ui->openConnectionSettings, &QAction::triggered,                this, &MainWindow::openConnectionSettings);
-    connect(ui->startDockingBtn,        &QPushButton::clicked,              this, &MainWindow::sendDockingMsg);
-    connect(ui->undockingBtn,           &QPushButton::clicked,              this, &MainWindow::sendUnDockingMsg);
-    connect(ui->stopBtn,                &QPushButton::clicked,              this, &MainWindow::sendStopMsg);
-    connect(ui->drone1MoveCargoCV,      &QPushButton::clicked,              this, &MainWindow::sendDrone1MoveCargoCV);
-    connect(ui->drone2MoveCargoCV,      &QPushButton::clicked,              this, &MainWindow::sendDrone2MoveCargoCV);
-    connect(ui->drone1MoveCargoCCV,     &QPushButton::clicked,              this, &MainWindow::sendDrone1MoveCargoCCV);
-    connect(ui->drone2MoveCargoCCV,     &QPushButton::clicked,              this, &MainWindow::sendDrone2MoveCargoCCV);
-    connect(ui->drone1MoveCargoHome,    &QPushButton::clicked,              this, &MainWindow::sendDrone1MoveCargoHome);
-    connect(ui->drone2MoveCargoHome,    &QPushButton::clicked,              this, &MainWindow::sendDrone2MoveCargoHome);
-    connect(ui->papaIsD1,               &QAction::triggered,                this, &MainWindow::handlePapaIsD1);
-    connect(ui->papaIsD2,               &QAction::triggered,                this, &MainWindow::handlePapaIsD2);
-    connect(ui->reconnect,              &QAction::toggled,                  this, &MainWindow::reconnect);
-    connect(conn_settings_m,            &conn_settings::newConnSettings,    this, &MainWindow::reconnect);
-    connect(drone1Client,               &DroneExchangeClient::connected,    this, &MainWindow::drone1Connected);
-    connect(drone2Client,               &DroneExchangeClient::connected,    this, &MainWindow::drone2Connected);
+    connect(ui->openConnectionSettings, &QAction::triggered,                        this, &MainWindow::openConnectionSettings);
+    connect(ui->startDockingBtn,        &QPushButton::clicked,                      this, &MainWindow::sendDockingMsg);
+    connect(ui->undockingBtn,           &QPushButton::clicked,                      this, &MainWindow::sendUnDockingMsg);
+    connect(ui->stopBtn,                &QPushButton::clicked,                      this, &MainWindow::sendStopMsg);
+    connect(ui->drone1MoveCargoCV,      &QPushButton::clicked,                      this, &MainWindow::sendDrone1MoveCargoCV);
+    connect(ui->drone2MoveCargoCV,      &QPushButton::clicked,                      this, &MainWindow::sendDrone2MoveCargoCV);
+    connect(ui->drone1MoveCargoCCV,     &QPushButton::clicked,                      this, &MainWindow::sendDrone1MoveCargoCCV);
+    connect(ui->drone2MoveCargoCCV,     &QPushButton::clicked,                      this, &MainWindow::sendDrone2MoveCargoCCV);
+    connect(ui->drone1MoveCargoHome,    &QPushButton::clicked,                      this, &MainWindow::sendDrone1MoveCargoHome);
+    connect(ui->drone2MoveCargoHome,    &QPushButton::clicked,                      this, &MainWindow::sendDrone2MoveCargoHome);
+    connect(ui->papaIsD1,               &QAction::triggered,                        this, &MainWindow::handlePapaIsD1);
+    connect(ui->papaIsD2,               &QAction::triggered,                        this, &MainWindow::handlePapaIsD2);
+    connect(ui->reconnect,              &QAction::toggled,                          this, &MainWindow::reconnect);
+    connect(conn_settings_m,            &conn_settings::newConnSettings,            this, &MainWindow::reconnect);
+    connect(drone1Client,               &DroneExchangeClient::connected,            this, &MainWindow::drone1Connected);
+    connect(drone2Client,               &DroneExchangeClient::connected,            this, &MainWindow::drone2Connected);
+    connect(drone1Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone1);
+    connect(drone2Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone2);
 
     reconnect();
     resetAllStatusLbl();
@@ -108,33 +110,6 @@ void MainWindow::handlePapaIsD2(bool checked)
     switchDroneRoles(false);
 }
 
-/*
-void MainWindow::handlePapaIsD1(bool checked)
-{
-    if (checked) {
-        ui->papaIsD2->setChecked(false);
-        drone1Client->sendMessage(DroneExchangeClient::StartPapa);
-        dronePapa = drone1Client;
-        drone2Client->sendMessage(DroneExchangeClient::StartMama);
-        droneMama = drone2Client;
-        setupDroneMsgReciveConn();
-        resetAllStatusLbl();
-    }
-}
-
-void MainWindow::handlePapaIsD2(bool checked)
-{
-    if (checked) {
-        ui->papaIsD1->setChecked(false);
-        drone1Client->sendMessage(DroneExchangeClient::StartMama);
-        droneMama = drone1Client;
-        drone2Client->sendMessage(DroneExchangeClient::StartPapa);
-        dronePapa = drone2Client;
-        setupDroneMsgReciveConn();
-        resetAllStatusLbl();
-    }
-}
-*/
 void MainWindow::reconnect()
 {
     drone1Client->connectToServer(conn_settings_m->getDrone1IP(), conn_settings_m->getDrone1Port());
@@ -148,6 +123,7 @@ void MainWindow::drone1Connected(bool succes)
 {
     if (succes) {
         drone1_ConnectionStatus->setStyleSheet("color: green;");
+        drone1Client->sendMessage(DroneExchangeClient::GetCurDocking);
     } else {
         drone1_ConnectionStatus->setStyleSheet("color: red;");
     }
@@ -157,8 +133,46 @@ void MainWindow::drone2Connected(bool succes)
 {
     if (succes) {
         drone2_ConnectionStatus->setStyleSheet("color: green;");
+        drone2Client->sendMessage(DroneExchangeClient::GetCurDocking);
     } else {
         drone2_ConnectionStatus->setStyleSheet("color: red;");
+    }
+}
+
+void MainWindow::recieveMsgDrone1(QString msg)
+{
+    if (msg.size() == 2)
+    {
+        if (msg[0] == static_cast<char>(DroneExchangeClient::GetCurDocking)) {
+            if (msg[1] == static_cast<char>(DroneExchangeClient::Mama)){
+                droneMama = drone1Client;
+            } else if (msg[1] == static_cast<char>(DroneExchangeClient::Papa)) {
+                dronePapa = drone1Client;
+            }
+        }
+        disconnect(drone1Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone1);
+
+        if (dronePapa && droneMama)
+            setupDroneMsgReciveConn();
+    }
+}
+
+void MainWindow::recieveMsgDrone2(QString msg)
+{
+    if (msg.size() == 2)
+    {
+        if (msg[0] == static_cast<char>(DroneExchangeClient::GetCurDocking)) {
+            if (msg[1] == static_cast<char>(DroneExchangeClient::Mama)){
+                droneMama = drone2Client;
+            } else if (msg[1] == static_cast<char>(DroneExchangeClient::Papa)) {
+                dronePapa = drone2Client;
+            }
+        }
+
+        disconnect(drone2Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone2);
+
+        if (dronePapa && droneMama)
+            setupDroneMsgReciveConn();
     }
 }
 

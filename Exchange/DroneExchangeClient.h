@@ -14,6 +14,7 @@ public:
 
     enum Commands {
         None            = 0x0,
+        GetCurDocking   = '2',
         StartMama       = 0xF1,
         StartPapa       = 0xF2,
         Docking         = 0xF3,
@@ -22,6 +23,12 @@ public:
         CargoMoveCV     = 0xF6,
         CargoMoveCCV    = 0xF7,
         cargoMoveHome   = 0xF8
+    };
+
+    enum DockerType{
+        NoCreated       = '0',
+        Mama            = '1',
+        Papa            = '2'
     };
 
     DroneExchangeClient(QObject *parent = nullptr);

@@ -4,7 +4,7 @@
 DroneExchangeClient::DroneExchangeClient(QObject *parent) : QObject(parent) {
     socket = new QTcpSocket(this);
     connect(socket, &QTcpSocket::readyRead, this, &DroneExchangeClient::handleRead);
-    //connect(socket, &QTcpSocket::error, this, &DroneExchangeClient::handleError);
+    connect(socket, &QTcpSocket::errorOccurred, this, &DroneExchangeClient::handleError);
     connect(socket, &QTcpSocket::connected, this, &DroneExchangeClient::handleConnected);
     connect(socket, &QTcpSocket::disconnected, this, &DroneExchangeClient::handleDisconnected);
 
@@ -15,6 +15,12 @@ DroneExchangeClient::DroneExchangeClient(QObject *parent) : QObject(parent) {
 void DroneExchangeClient::connectToServer(const QString &host, quint16 port) {
     m_address = host;
     m_port = port;
+
+    // Сбрасываем соединение перед новым подключением
+    if (socket->state() != QAbstractSocket::UnconnectedState) {
+        socket->abort();
+    }
+
     socket->connectToHost(m_address, m_port);
     reconnectTimer->start(5000); // 5 секунд между попытками
 }
@@ -27,21 +33,16 @@ void DroneExchangeClient::sendMessage(Commands message) {
 }
 
 void DroneExchangeClient::handleRead() {
-    QTcpSocket* socket = qobject_cast<QTcpSocket*>(sender());
-    QByteArray buffer = socket->readAll();
-    QString data = QString::fromUtf8(buffer);
-
-    // Поиск маркера (например, "\n")
-    int markerPos = data.indexOf('\n');
-
-    if (markerPos != -1) {
-        QString completeMessage = data.left(markerPos);
-        // Обработка сообщения
-        emit messageReceived(completeMessage);        
+    while (socket->canReadLine()) { // Читаем построчно
+        QByteArray line = socket->readLine().trimmed();
+        if (!line.isEmpty()) {
+            emit messageReceived(QString::fromUtf8(line));
+        }
     }
 }
 
 void DroneExchangeClient::handleError(QAbstractSocket::SocketError) {
+    qWarning() << "Socket error:" << socket->errorString();
     reconnectTimer->start();
     emit connected(false);
 }
@@ -57,5 +58,8 @@ void DroneExchangeClient::handleDisconnected() {
 }
 
 void DroneExchangeClient::reconnect() {
-    socket->connectToHost(m_address, m_port);
+    qDebug() << "Attempting to reconnect...";
+    if (socket->state() == QAbstractSocket::UnconnectedState) {
+        socket->connectToHost(m_address, m_port);
+    }
 }

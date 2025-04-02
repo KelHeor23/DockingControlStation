@@ -31,8 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(conn_settings_m,            &conn_settings::newConnSettings,            this, &MainWindow::reconnect);
     connect(drone1Client,               &DroneExchangeClient::connected,            this, &MainWindow::drone1Connected);
     connect(drone2Client,               &DroneExchangeClient::connected,            this, &MainWindow::drone2Connected);
-    connect(drone1Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone1);
-    connect(drone2Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone2);
 
     reconnect();
     resetAllStatusLbl();
@@ -69,7 +67,7 @@ void MainWindow::openConnectionSettings(bool)
 
 
 void MainWindow::switchDroneRoles(bool makeDrone1Papa)
-{
+{    
     // 1. Сначала сбрасываем текущие роли
     if (dronePapa) {
         dronePapa = nullptr;
@@ -78,19 +76,32 @@ void MainWindow::switchDroneRoles(bool makeDrone1Papa)
         droneMama = nullptr;
     }
 
+
     // 2. Устанавливаем новые роли
     if (makeDrone1Papa) {
-        drone1Client->sendMessage(DroneExchangeClient::StartPapa);
-        drone2Client->sendMessage(DroneExchangeClient::StartMama);
-        dronePapa = drone1Client;
-        droneMama = drone2Client;
+        if (!drone1TypeSet){
+            drone1Client->sendMessage(DroneExchangeClient::StartPapa);
+            dronePapa = drone1Client;
+            drone1TypeSet = true;
+        }
+        if (!drone2TypeSet){
+            drone2Client->sendMessage(DroneExchangeClient::StartMama);
+            droneMama = drone2Client;
+            drone2TypeSet = true;
+        }
         ui->papaIsD1->setChecked(true);
         ui->papaIsD2->setChecked(false);
     } else {
-        drone1Client->sendMessage(DroneExchangeClient::StartMama);
-        drone2Client->sendMessage(DroneExchangeClient::StartPapa);
-        dronePapa = drone2Client;
-        droneMama = drone1Client;
+        if (!drone1TypeSet){
+            drone1Client->sendMessage(DroneExchangeClient::StartMama);
+            droneMama = drone1Client;
+            drone1TypeSet = true;
+        }
+        if (!drone2TypeSet){
+            drone2Client->sendMessage(DroneExchangeClient::StartPapa);
+            dronePapa = drone2Client;
+            drone2TypeSet = true;
+        }
         ui->papaIsD1->setChecked(false);
         ui->papaIsD2->setChecked(true);
     }
@@ -122,20 +133,32 @@ void MainWindow::reconnect()
 void MainWindow::drone1Connected(bool succes)
 {
     if (succes) {
-        drone1_ConnectionStatus->setStyleSheet("color: green;");
+        drone1_ConnectionStatus->setStyleSheet("color: orange;");
         drone1Client->sendMessage(DroneExchangeClient::GetCurDocking);
+        connect(drone1Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone1);
     } else {
         drone1_ConnectionStatus->setStyleSheet("color: red;");
+        drone1TypeSet = false;
+        if (drone1Client == dronePapa)
+            dronePapa = nullptr;
+        else if (drone1Client == droneMama)
+            droneMama = nullptr;
     }
 }
 
 void MainWindow::drone2Connected(bool succes)
 {
     if (succes) {
-        drone2_ConnectionStatus->setStyleSheet("color: green;");
+        drone2_ConnectionStatus->setStyleSheet("color: orange;");
         drone2Client->sendMessage(DroneExchangeClient::GetCurDocking);
+        connect(drone2Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone2);
     } else {
         drone2_ConnectionStatus->setStyleSheet("color: red;");
+        drone2TypeSet = false;
+        if (drone2Client == dronePapa)
+            dronePapa = nullptr;
+        else if (drone2Client == droneMama)
+            droneMama = nullptr;
     }
 }
 
@@ -146,14 +169,17 @@ void MainWindow::recieveMsgDrone1(QString msg)
         if (msg[0] == static_cast<char>(DroneExchangeClient::GetCurDocking)) {
             if (msg[1] == static_cast<char>(DroneExchangeClient::Mama)){
                 droneMama = drone1Client;
+                drone1TypeSet = true;
             } else if (msg[1] == static_cast<char>(DroneExchangeClient::Papa)) {
                 dronePapa = drone1Client;
+                drone1TypeSet = true;
             }
         }
         disconnect(drone1Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone1);
 
-        if (dronePapa && droneMama)
-            setupDroneMsgReciveConn();
+        setupDroneMsgReciveConn();
+    } else {
+        drone1Client->sendMessage(DroneExchangeClient::GetCurDocking);
     }
 }
 
@@ -164,15 +190,18 @@ void MainWindow::recieveMsgDrone2(QString msg)
         if (msg[0] == static_cast<char>(DroneExchangeClient::GetCurDocking)) {
             if (msg[1] == static_cast<char>(DroneExchangeClient::Mama)){
                 droneMama = drone2Client;
+                drone2TypeSet = true;
             } else if (msg[1] == static_cast<char>(DroneExchangeClient::Papa)) {
                 dronePapa = drone2Client;
+                drone2TypeSet = true;
             }
         }
 
         disconnect(drone2Client,               &DroneExchangeClient::messageReceived,      this, &MainWindow::recieveMsgDrone2);
 
-        if (dronePapa && droneMama)
-            setupDroneMsgReciveConn();
+        setupDroneMsgReciveConn();
+    } else {
+        drone2Client->sendMessage(DroneExchangeClient::GetCurDocking);
     }
 }
 
@@ -196,6 +225,11 @@ void MainWindow::recieveStatusPapa(QString status)
     else if (status[0] == '1')
         ui->pullingUp->setStyleSheet(green);
 
+    if (drone2Client == dronePapa)
+        drone2_ConnectionStatus->setStyleSheet("color: green;");
+    else if (drone1Client == dronePapa)
+        drone1_ConnectionStatus->setStyleSheet("color: green;");
+
     qDebug() << "Papa: " << status;
 }
 
@@ -216,6 +250,11 @@ void MainWindow::recieveStatusMama(QString status)
 
     if (status[2] == '1')
         ui->transferDone->setStyleSheet(green);
+
+    if (drone2Client == droneMama)
+        drone2_ConnectionStatus->setStyleSheet("color: green;");
+    else if (drone1Client == droneMama)
+        drone1_ConnectionStatus->setStyleSheet("color: green;");
 
     qDebug() << "Mama: " << status;
 }

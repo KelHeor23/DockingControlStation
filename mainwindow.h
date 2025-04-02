@@ -56,13 +56,16 @@ private:
     QLabel *drone1_ConnectionStatus;
     QLabel *drone2_ConnectionStatus;
 
-    DroneExchangeClient *drone1Client;
-    DroneExchangeClient *drone2Client;
+    DroneExchangeClient *drone1Client = nullptr;
+    DroneExchangeClient *drone2Client = nullptr;
 
     DroneExchangeClient *droneMama = nullptr;
     DroneExchangeClient *dronePapa = nullptr;
 
     QString red = "background-color: rgba(255, 0, 0, 75); font-size: 25px;";
     QString green = "background-color: rgba(0, 255, 0, 75); font-size: 25px;";
+
+    bool drone1TypeSet = false;
+    bool drone2TypeSet = false;
 };
 #endif // MAINWINDOW_H

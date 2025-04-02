@@ -40,10 +40,13 @@
         <item>
          <widget class="QPushButton" name="startDockingBtn">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
           </property>
           <property name="text">
            <string>Старт</string>
@@ -53,10 +56,13 @@
         <item>
          <widget class="QPushButton" name="undockingBtn">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
           </property>
           <property name="text">
            <string>Отмена</string>
@@ -66,10 +72,13 @@
         <item>
          <widget class="QPushButton" name="stopBtn">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
           </property>
           <property name="text">
            <string>Стоп</string>
@@ -253,11 +262,17 @@
           <property name="layoutDirection">
            <enum>Qt::LeftToRight</enum>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
+          </property>
           <property name="text">
            <string>Дрон  Мама. Готовность</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -269,11 +284,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
+          </property>
           <property name="text">
            <string>Дрон Папа. Готовность</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -285,11 +306,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
+          </property>
           <property name="text">
            <string>Стрела выдвинута</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -301,11 +328,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
+          </property>
           <property name="text">
            <string>Крюки закрылись</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -317,11 +350,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
+          </property>
           <property name="text">
            <string>Дроны стянулись</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -333,11 +372,17 @@
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="styleSheet">
+           <string notr="true">font: 20pt &quot;Ubuntu Sans&quot;;</string>
+          </property>
           <property name="text">
            <string>Передача завершена</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>true</bool>
           </property>
          </widget>
         </item>

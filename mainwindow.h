@@ -62,7 +62,7 @@ private:
     DroneExchangeClient *droneMama = nullptr;
     DroneExchangeClient *dronePapa = nullptr;
 
-    QString red = "background-color: rgba(255, 0, 0, 75);";
-    QString green = "background-color: rgba(0, 255, 0, 75);";
+    QString red = "background-color: rgba(255, 0, 0, 75); font-size: 25px;";
+    QString green = "background-color: rgba(0, 255, 0, 75); font-size: 25px;";
 };
 #endif // MAINWINDOW_H

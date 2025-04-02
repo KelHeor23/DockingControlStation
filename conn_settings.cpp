@@ -79,6 +79,7 @@ void conn_settings::setConnValue()
         saveSettings();
 
         emit newConnSettings();
+        this->close();
     }
 }
 

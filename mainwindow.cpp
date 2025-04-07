@@ -81,12 +81,12 @@ void MainWindow::switchDroneRoles(bool makeDrone1Papa)
     if (makeDrone1Papa) {
         if (!drone1TypeSet){
             drone1Client->sendMessage(DroneExchangeClient::StartPapa);
-            dronePapa = drone1Client;
+            setDroneType(drone1Client, ui->groupBox, "Дрон 1", true);
             drone1TypeSet = true;
         }
         if (!drone2TypeSet){
             drone2Client->sendMessage(DroneExchangeClient::StartMama);
-            droneMama = drone2Client;
+            setDroneType(drone2Client, ui->groupBox_2, "Дрон 2", false);
             drone2TypeSet = true;
         }
         ui->papaIsD1->setChecked(true);
@@ -94,12 +94,12 @@ void MainWindow::switchDroneRoles(bool makeDrone1Papa)
     } else {
         if (!drone1TypeSet){
             drone1Client->sendMessage(DroneExchangeClient::StartMama);
-            droneMama = drone1Client;
+            setDroneType(drone1Client, ui->groupBox, "Дрон 1", false);
             drone1TypeSet = true;
         }
         if (!drone2TypeSet){
             drone2Client->sendMessage(DroneExchangeClient::StartPapa);
-            dronePapa = drone2Client;
+            setDroneType(drone2Client, ui->groupBox_2, "Дрон 2", true);
             drone2TypeSet = true;
         }
         ui->papaIsD1->setChecked(false);
@@ -168,10 +168,10 @@ void MainWindow::recieveMsgDrone1(QString msg)
     {
         if (msg[0] == static_cast<char>(DroneExchangeClient::GetCurDocking)) {
             if (msg[1] == static_cast<char>(DroneExchangeClient::Mama)){
-                droneMama = drone1Client;
+                setDroneType(drone1Client, ui->groupBox, "Дрон 1", false);
                 drone1TypeSet = true;
             } else if (msg[1] == static_cast<char>(DroneExchangeClient::Papa)) {
-                dronePapa = drone1Client;
+                setDroneType(drone1Client, ui->groupBox, "Дрон 1", true);
                 drone1TypeSet = true;
             }
         }
@@ -189,10 +189,10 @@ void MainWindow::recieveMsgDrone2(QString msg)
     {
         if (msg[0] == static_cast<char>(DroneExchangeClient::GetCurDocking)) {
             if (msg[1] == static_cast<char>(DroneExchangeClient::Mama)){
-                droneMama = drone2Client;
+                setDroneType(drone2Client, ui->groupBox_2, "Дрон 2", false);
                 drone2TypeSet = true;
             } else if (msg[1] == static_cast<char>(DroneExchangeClient::Papa)) {
-                dronePapa = drone2Client;
+                setDroneType(drone2Client, ui->groupBox_2, "Дрон 2", true);
                 drone2TypeSet = true;
             }
         }
@@ -257,6 +257,17 @@ void MainWindow::recieveStatusMama(QString status)
         drone1_ConnectionStatus->setStyleSheet("color: green;");
 
     qDebug() << "Mama: " << status;
+}
+
+void MainWindow::setDroneType(DroneExchangeClient *&droneTarget, QGroupBox *groupBox, const QString &droneName, bool isPapa)
+{
+    if (isPapa) {
+        dronePapa = droneTarget;
+        groupBox->setTitle(QString("%1. Папа").arg(droneName));
+    } else {
+        droneMama = droneTarget;
+        groupBox->setTitle(QString("%1. Мама").arg(droneName));
+    }
 }
 
 void MainWindow::sendDockingMsg()

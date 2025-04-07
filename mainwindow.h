@@ -7,6 +7,7 @@
 #include <QLabel>
 
 #include "Exchange/DroneExchangeClient.h"
+#include "qgroupbox.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,6 +37,7 @@ public slots:
     void recieveMsgDrone2(QString status);
     void recieveStatusPapa(QString status);
     void recieveStatusMama(QString status);
+    void setDroneType(DroneExchangeClient*& droneTarget, QGroupBox* groupBox, const QString& droneName, bool isPapa);
 
     /// Слоты отправки сообщений
     void sendDockingMsg();

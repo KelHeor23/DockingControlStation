@@ -14,21 +14,21 @@ public:
 
     enum Commands {
         None            = 0x0,
-        GetCurDocking   = '2',
-        StartMama       = 0xF1,
-        StartPapa       = 0xF2,
-        Docking         = 0xF3,
-        Undocking       = 0xF4,
-        Stop            = 0xF5,
-        CargoMoveCV     = 0xF6,
-        CargoMoveCCV    = 0xF7,
-        cargoMoveHome   = 0xF8
+        GetCurDocking   = 0x32, // Запрос текущего типа
+        StartMama       = 0xF1, // Задать тип мама
+        StartPapa       = 0xF2, // Задать тип папа
+        Docking         = 0xF3, // Начать стыковку
+        Undocking       = 0xF4, // Начать расстыковку
+        Stop            = 0xF5, // Остановить все сервы
+        CargoMoveCV     = 0xF6, // Сдвинуть телегу вперед
+        CargoMoveCCV    = 0xF7, // Сдвинуть телегу назад
+        cargoMoveHome   = 0xF8  // Сдвинуть телегу к домашней точке
     };
 
     enum DockerType{
-        NoCreated       = '0',
-        Mama            = '1',
-        Papa            = '2'
+        NoCreated       = 0x30,
+        Mama            = 0x31,
+        Papa            = 0x32
     };
 
     DroneExchangeClient(QObject *parent = nullptr);
